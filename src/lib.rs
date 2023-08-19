@@ -1,8 +1,8 @@
 use std::net::{UdpSocket, ToSocketAddrs};
-
 use std::ops::Deref;
 
 type PassError = Box<dyn std::error::Error>;
+
 
 pub fn buf_to_string(buf: &[u8]) -> String {
     let mut s = String::new();
@@ -34,6 +34,14 @@ impl Client {
         Ok(addr)
     }
 
+    pub fn set_timeout(&self, sec: u64) {
+        if sec == 0 {
+            self.set_read_timeout(None).expect("cannot set timeout");
+        } else {
+            self.set_read_timeout(Some(std::time::Duration::from_secs(sec))).expect("cannot set timeout");
+        }
+    }
+
     pub fn connect_to_relay<A>(&self, addr: A) -> Result<&Self, PassError> 
         where A: ToSocketAddrs
     {
@@ -44,6 +52,7 @@ impl Client {
     pub fn connect_to_peer<A>(&self, addr: A) -> Result<&Self, PassError> 
         where A: ToSocketAddrs
     {
+        self.set_timeout(2);
         self.connect(addr)?;
 
         loop {
@@ -54,7 +63,11 @@ impl Client {
                 break;
             }
         }
+        self.send_string("connect")?;
         println!("connect to peer success");
+
+        self.set_timeout(0);
+
         Ok(self)
     }
 

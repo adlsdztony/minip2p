@@ -1,8 +1,7 @@
 use std::io::Write;
+use minip2p::{Client, buf_to_string};
 
 type PassError = Box<dyn std::error::Error>;
-
-use minip2p::{Client, buf_to_string};
 
 
 fn chat(socket: Client) {
