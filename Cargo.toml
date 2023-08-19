@@ -6,8 +6,8 @@ authors = ["adlsdztony <zzl0712@connect.hku.hk>"]
 license = "MIT OR Apache-2.0"
 description = "a user-friendly client for hole-punching"
 readme = "README.md"
-homepage = "https://github.com/adlsdztony/hkulibrary"
-repository = "https://github.com/adlsdztony/hkulibrary"
+homepage = "https://github.com/adlsdztony/minip2p"
+repository = "https://github.com/adlsdztony/minip2p"
 keywords = ["p2p", "hole-punching", "udp"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
